@@ -1,0 +1,37 @@
+{
+  "name": "youtube-analysis-agent-backend",
+  "version": "0.1.0",
+  "description": "Backend API for YouTube Video Analysis Agent System",
+  "type": "module",
+  "scripts": {
+    "dev": "python src/main.py",
+    "start": "python src/main.py",
+    "test": "pytest tests/ -v",
+    "lint": "black src/ && flake8 src/",
+    "format": "black src/"
+  },
+  "keywords": [
+    "youtube",
+    "video-analysis",
+    "multi-agent",
+    "llm",
+    "ollama",
+    "langchain"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "python-dotenv": "^1.0.0",
+    "requests": "^2.31.0",
+    "langchain": "^0.1.0",
+    "ollama": "^0.0.50",
+    "yt-dlp": "^2024.1.1",
+    "fastapi": "^0.109.0",
+    "uvicorn": "^0.27.0"
+  },
+  "devDependencies": {
+    "pytest": "^7.4.0",
+    "black": "^23.0.0",
+    "flake8": "^6.0.0"
+  }
+}

@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# 🎯 Breakpoint Debugging Quick Start Script
+
+echo "╔════════════════════════════════════════════════════════════════╗"
+echo "║     🎯 BREAKPOINT DEBUGGING QUICK START                       ║"
+echo "╚════════════════════════════════════════════════════════════════╝"
+echo ""
+
+cd /Users/viyangchaudhari/Projects/youtube
+
+echo "✅ Step 1: Starting Backend with Breakpoints Enabled..."
+echo ""
+echo "Run this in Terminal 1:"
+echo "=================================================="
+echo "cd /Users/viyangchaudhari/Projects/youtube"
+echo "python3 -m backend.src.main"
+echo "=================================================="
+echo ""
+echo "Wait for it to say: 'Uvicorn running on http://0.0.0.0:8000'"
+echo ""
+
+echo "✅ Step 2: Trigger Breakpoint from Terminal 2..."
+echo ""
+echo "Run this in Terminal 2:"
+echo "=================================================="
+echo "curl -X POST http://localhost:8000/analyze \\"
+echo "  -H \"Content-Type: application/json\" \\"
+echo "  -d '{\"url\": \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\"}'"
+echo "=================================================="
+echo ""
+
+echo "✅ Step 3: You'll See (Pdb) Prompt in Terminal 1"
+echo ""
+echo "Type these commands:"
+echo "=================================================="
+echo "(Pdb) p request.url"
+echo "(Pdb) p request.use_cache"
+echo "(Pdb) c              # Continue to next breakpoint"
+echo "(Pdb) p len(result['transcript']['segments'])"
+echo "(Pdb) q              # Quit debugger"
+echo "=================================================="
+echo ""
+
+echo "📚 Common pdb Commands:"
+echo "=================================================="
+echo "n        = Next line"
+echo "s        = Step into function"
+echo "c        = Continue"
+echo "p var    = Print variable"
+echo "pp obj   = Pretty print"
+echo "l        = List code"
+echo "w        = Where (call stack)"
+echo "q        = Quit"
+echo "=================================================="
+echo ""
+
+echo "📖 Documentation:"
+echo "=================================================="
+echo "• BREAKPOINT_SUCCESS.md - Complete guide"
+echo "• BREAKPOINT_COMMANDS.txt - Command reference"
+echo "• EXACT_BREAKPOINT_CODE.md - Code details"
+echo "=================================================="
+echo ""
+
+echo "✅ Ready to debug! Open 2 terminals and follow the steps above."

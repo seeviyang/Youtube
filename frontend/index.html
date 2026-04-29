@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Analysis Agent</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 YouTube Video Analysis Agent</h1>
+            <p>Powered by Ollama • Multi-Agent Intelligence</p>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="form-group">
+                    <label for="videoUrl">YouTube URL:</label>
+                    <input
+                        type="text"
+                        id="videoUrl"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        class="input-field"
+                    >
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary">Analyze Video</button>
+                <div id="status" class="status"></div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <!-- Summary -->
+                <div class="card">
+                    <h2>📋 Summary</h2>
+                    <div id="summaryContent" class="content"></div>
+                </div>
+
+                <!-- Bullet Points -->
+                <div class="card">
+                    <h2>📌 Key Points</h2>
+                    <ul id="bulletPoints" class="bullet-list"></ul>
+                </div>
+
+                <!-- Key Takeaways -->
+                <div class="card">
+                    <h2>⭐ Key Takeaways</h2>
+                    <ul id="takeaways" class="bullet-list"></ul>
+                </div>
+
+                <!-- Insights -->
+                <div class="card">
+                    <h2>💡 Insights</h2>
+                    <div class="insights-grid">
+                        <div class="insight-box">
+                            <h3>Patterns</h3>
+                            <ul id="patterns" class="bullet-list"></ul>
+                        </div>
+                        <div class="insight-box">
+                            <h3>Action Items</h3>
+                            <ul id="actionItems" class="bullet-list"></ul>
+                        </div>
+                        <div class="insight-box">
+                            <h3>Related Topics</h3>
+                            <ul id="relatedTopics" class="bullet-list"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fact Check -->
+                <div class="card">
+                    <h2>✓ Fact Check</h2>
+                    <div id="factCheckSummary" class="fact-check-summary"></div>
+                    <div id="factCheckDetails" class="fact-check-details"></div>
+                </div>
+
+                <!-- Quality Metrics -->
+                <div class="card">
+                    <h2>📊 Quality Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <div class="metric-value" id="confidenceScore">-</div>
+                            <div class="metric-label">Overall Confidence</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" id="supportPercentage">-</div>
+                            <div class="metric-label">Claim Support %</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metadata -->
+                <div class="card">
+                    <h2>📌 Metadata</h2>
+                    <div id="metadata" class="metadata"></div>
+                </div>
+            </section>
+
+            <!-- Error Section -->
+            <section id="errorSection" class="error-section" style="display: none;">
+                <div class="error-box">
+                    <h2>⚠️ Error</h2>
+                    <p id="errorMessage"></p>
+                    <button class="btn btn-secondary" onclick="resetForm()">Try Again</button>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="card">
+                <h2>📚 Analysis History</h2>
+                <button class="btn btn-secondary" onclick="loadHistory()">Load History</button>
+                <div id="historyList" class="history-list"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>YouTube Video Analysis Agent • Built with Ollama • Multi-Agent Architecture</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

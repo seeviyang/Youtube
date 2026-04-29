@@ -1,0 +1,215 @@
+# 🐛 Quick Debugging Reference
+
+## 3 Ways to Debug (Pick One)
+
+### ⚡ EASIEST: Simple Interactive Menu
+```bash
+python simple_debug.py
+```
+Menu-driven debugging with step-by-step walkthroughs.
+
+### 🔧 VS CODE: Visual Debugger
+```
+1. Press ⇧⌘D (or View → Debug)
+2. Select debug config from dropdown
+3. Click F5 or "Start Debugging"
+4. Click line number to add breakpoint
+5. Use F10 (step over), F11 (step into), F5 (continue)
+```
+
+### 💻 TERMINAL: Command Line Debugger
+```bash
+python debug_api.py
+# or
+python debug_transcript_extractor.py
+```
+
+---
+
+## What Each Script Does
+
+| Script | Purpose | Best For |
+|--------|---------|----------|
+| `simple_debug.py` | Menu-driven debugging | Learning, quick testing |
+| `debug_api.py` | Full pipeline debugging | Understanding flow, testing integration |
+| `debug_transcript_extractor.py` | Transcript extraction | Debugging captions, URLs, parsing |
+| `.vscode/launch.json` | VS Code config | Professional debugging, production issues |
+
+---
+
+## Quick Debug Scenarios
+
+### 🎬 "I want to see how transcript extraction works"
+```bash
+python simple_debug.py
+# Choose: 1 (Transcript Extraction)
+# OR
+python debug_transcript_extractor.py
+# Choose: 1 (Full flow)
+```
+
+### 📝 "I want to see how summarization works"
+```bash
+python simple_debug.py
+# Choose: 2 (Summarization)
+```
+
+### 🔍 "I want to inspect a specific variable"
+```bash
+python debug_api.py
+# Choose: 1 (Full Analysis)
+# Hits breakpoint → (Pdb) prompt
+# Type: p variable_name
+# Type: c (continue)
+```
+
+### 🪲 "I found a bug and want to step through it"
+```
+1. Open VS Code
+2. Open the file with the bug
+3. Click on the line number to add breakpoint (red dot)
+4. Press F5 to start debugging
+5. Press F10 to step line-by-line
+6. Use Variables panel to inspect state
+```
+
+---
+
+## Common pdb Commands (When Debugger Pauses)
+
+```
+n          Next line (step over)
+s          Step into function
+c          Continue
+p var      Print variable
+pp dict    Pretty-print
+l          List code
+w          Show where you are
+h          Help
+q          Quit
+
+# Examples:
+(Pdb) p result
+(Pdb) pp result['summary']
+(Pdb) p len(segments)
+```
+
+---
+
+## 🔴 Where to Put Breakpoints
+
+**Transcript Extraction**: `backend/src/agents/transcript_extractor.py`
+- Line 89: After `_extract_captions()`
+- Line 210: Inside `_parse_captions()`
+- Line 227: After JSON parsing
+
+**Summarization**: `backend/src/agents/summarizer.py`
+- Line 40: Inside `summarize()`
+
+**API Response**: `backend/src/main.py`
+- Line 116: JSON serialization check
+
+**Full Pipeline**: `backend/src/orchestrator.py`
+- Line 51: After transcript extraction
+- Line 59: After summarization
+- Line 93: After result compilation
+
+---
+
+## VS Code Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| ⇧⌘D | Open Debug panel |
+| F5 | Start/Continue |
+| F10 | Step over |
+| F11 | Step into |
+| ⇧F11 | Step out |
+| ⌘K⌘I | Toggle breakpoint |
+| ⌘Shift+B | Focus breakpoints |
+
+---
+
+## Debugging the API
+
+**Terminal 1**: Start Ollama
+```bash
+ollama serve
+```
+
+**Terminal 2**: Start Backend
+```bash
+cd /Users/viyangchaudhari/Projects/youtube
+python3 -m backend.src.main
+```
+
+**Terminal 3**: Test with curl
+```bash
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'
+```
+
+If stuck, press Ctrl+C in Terminal 2 to see stack trace!
+
+---
+
+## Useful Debug Patterns
+
+### Print Structure
+```python
+(Pdb) import json
+(Pdb) print(json.dumps(result, indent=2, default=str)[:500])
+```
+
+### Check Types
+```python
+(Pdb) p type(result)
+(Pdb) p type(result['transcript'])
+(Pdb) p hasattr(result, '__dict__')  # Is it an object?
+```
+
+### Inspect Collections
+```python
+(Pdb) p len(segments)
+(Pdb) p segments[0]
+(Pdb) p [s.text for s in segments[:3]]
+```
+
+### Check Errors
+```python
+(Pdb) import traceback
+(Pdb) traceback.print_exc()
+```
+
+---
+
+## Still Stuck?
+
+1. **Read the logs**: `tail -f /tmp/backend.log`
+2. **Check Ollama**: `curl http://localhost:11434/api/tags`
+3. **Test manually**: `python debug_api.py`
+4. **Read DEBUGGING_GUIDE.md**: Full reference with examples
+5. **Print debug**: Add `print(f"DEBUG: {var}")` to code
+
+---
+
+## Next Step
+
+Choose one and try it:
+
+```bash
+# Option A: Interactive menu (RECOMMENDED for beginners)
+python simple_debug.py
+
+# Option B: VS Code visual debugger (RECOMMENDED for professionals)
+# Open VS Code, Press F5
+
+# Option C: Full pipeline debugger
+python debug_api.py
+
+# Option D: Transcript debugging
+python debug_transcript_extractor.py
+```
+
+Happy debugging! 🎉

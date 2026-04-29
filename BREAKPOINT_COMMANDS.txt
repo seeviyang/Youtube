@@ -1,0 +1,120 @@
+# 🎯 Breakpoint Quick Commands
+
+## START DEBUGGING
+
+**Terminal 1: Start the backend**
+```bash
+cd /Users/viyangchaudhari/Projects/youtube
+python3 -m backend.src.main
+```
+
+**Terminal 2: Trigger a request (hits breakpoint)**
+```bash
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'
+```
+
+The program will PAUSE in Terminal 1 showing `(Pdb)` prompt.
+
+---
+
+## PDB COMMANDS AT BREAKPOINT
+
+### Step Through Code
+```
+n       Next line
+s       Step into function
+r       Return from function
+c       Continue to next breakpoint
+```
+
+### Inspect Variables
+```
+p var           Print variable
+pp var          Pretty print
+p dir(obj)      List object attributes
+p locals()      All local variables
+```
+
+### View Code
+```
+l               List current code
+l 100,120       List lines 100-120
+w               Show where you are
+```
+
+### Other
+```
+h               Help
+q               Quit
+!python code    Execute Python
+```
+
+---
+
+## EXAMPLE SESSION
+
+```bash
+# Terminal 1:
+$ python3 -m backend.src.main
+INFO:     Uvicorn running on http://0.0.0.0:8000
+# (waiting...)
+
+# Terminal 2:
+$ curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'
+
+# Back to Terminal 1 - PAUSED AT BREAKPOINT:
+🔴 BREAKPOINT 1: API Request Received
+...
+(Pdb) p request.url
+'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+
+(Pdb) p request.use_cache
+True
+
+(Pdb) c          # Continue to next breakpoint
+🔴 BREAKPOINT 2: About to call orchestrator.analyze()
+...
+(Pdb) c          # Continue
+
+🔴 BREAKPOINT 3: Analysis Complete - Inspect Result
+...
+(Pdb) p len(result['transcript']['segments'])
+61
+
+(Pdb) c          # Done!
+# Returns to Terminal 2
+```
+
+---
+
+## 🎯 3 BREAKPOINTS IN main.py
+
+1. **Line 116** - API request received
+   - Inspect: `request.url`, `request.use_cache`
+
+2. **Line 127** - Before analysis
+   - Inspect: `orchestrator`, parameters
+
+3. **Line 141** - After analysis complete
+   - Inspect: `result`, all analysis data
+
+---
+
+## 💡 USEFUL DEBUG EXPRESSIONS
+
+```
+(Pdb) p request.url
+(Pdb) p len(result)
+(Pdb) p result.keys()
+(Pdb) p type(result)
+(Pdb) p result['transcript']['segments'][0]
+(Pdb) import json; print(json.dumps(result, indent=2, default=str))
+```
+
+---
+
+**✅ BREAKPOINTS ARE WORKING! Enjoy debugging!**
