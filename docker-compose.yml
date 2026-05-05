@@ -28,12 +28,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_BASE_URL=http://ollama:11434
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/app
     depends_on:
-      ollama:
-        condition: service_healthy
+      - ollama
     volumes:
       - ./backend/data:/app/data
       - ./backend/logs:/app/logs
@@ -46,6 +46,7 @@ services:
       start_period: 10s
     networks:
       - youtube-network
+    working_dir: /app
     command: python -m uvicorn src.main:app --host 0.0.0.0 --port 8000
 
   # Frontend Service (Node/React/Vue)

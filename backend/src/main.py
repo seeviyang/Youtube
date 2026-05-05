@@ -10,11 +10,14 @@ from pydantic import BaseModel
 from typing import Optional
 import uvicorn
 
-# Add the project root to Python path for debugging
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+# Ensure the backend directory is in the path for proper package resolution
+backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
 
-from backend.src.config import config
-from backend.src.orchestrator import VideoAnalysisOrchestrator
+# Now import from src as a package
+from src.config import config
+from src.orchestrator import VideoAnalysisOrchestrator
 
 # Configure logging
 logging.basicConfig(
