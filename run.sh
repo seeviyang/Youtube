@@ -38,7 +38,7 @@ sleep 3
 # Start frontend server
 echo -e "${BLUE}Starting Frontend Server...${NC}"
 cd "$PROJECT_ROOT/frontend"
-python -m http.server 8080 > /dev/null 2>&1 &
+python3 -m http.server 8080 > /dev/null 2>&1 &
 FRONTEND_PID=$!
 echo -e "${GREEN}✓ Frontend started (PID: $FRONTEND_PID)${NC}"
 echo ""
